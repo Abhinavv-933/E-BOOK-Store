@@ -1,8 +1,9 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
-import { Avatar, Box, Button, CircularProgress, Container, CssBaseline, Grid,Typography, TextField, Link} from '@mui/material';
+import { Avatar, Box, Button, CircularProgress, Container, CssBaseline,Typography, TextField, Link} from '@mui/material';
 import { createTheme, ThemeProvider} from '@mui/material/styles';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Grid from '@mui/material/Grid';
 
 const defaultTheme = createTheme();
 
@@ -12,7 +13,7 @@ export default function Signup(){
     email:'',
     firstName:'',
     lastName:'',
-    passowrd:''
+    password:''
   });
    const [loading, setLoading] = useState(false);
 
@@ -38,7 +39,7 @@ export default function Signup(){
   return (
     <>
       <ThemeProvider theme = {defaultTheme}>
-         <Container components="main" maxwidth="xs">
+         <Container component="main" maxwidth="xs">
             <CssBaseline />
             <Box 
                  sx={{
@@ -51,12 +52,12 @@ export default function Signup(){
                 <Avatar sx={{ m:1, bgcolor: 'primary.main'}}>
                    <LockOutlinedIcon />
                 </Avatar>
-                <Typography components="h1" variants="h5">
+                <Typography component="h1" variants="h5">
                    Sign up
                 </Typography>
-                <Box components="form" noValidate onSubmit={handleSubmit} sx={{ mt:3}}>
-                  <Grid Container spacing={2}>
-                    <Grid item xs={12} sm={6}>
+                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt:3}}>
+                  <Grid container spacing={2}>
+                    <Grid size={{ xs: 12, sm: 6 }}>
                        <TextField 
                           autoComplete="given-name"
                           name="firstName"
@@ -65,11 +66,11 @@ export default function Signup(){
                           id="firstName"
                           label="First Name"
                           autoFocus
-                          value={FormData.firstName}
+                          value={formData.firstName}
                           onChange={handleInputChange}
                        />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid size={{ xs: 12, sm: 6 }}>
                        <TextField 
                           required
                           fullWidth
@@ -77,23 +78,23 @@ export default function Signup(){
                           label="Last Name"
                           name="lastName"
                           autoComplete="family-name"
-                          value={FormData.lastName}
+                          value={formData.lastName}
                           onChange={handleInputChange}
                        />
                     </Grid>
-                    <Grid item xs={12}>
-                      <TextField 
+                    <Grid size={{ xs: 12}}>
+                      <TextField
                         autoComplete="email"
                         name="email"
                         required
                         fullWidth
                         id="email"
                         label="Email Address"
-                        value={FormData.email}
+                        value={formData.email}
                         onChange={handleInputChange}
                      />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid size={{ xs: 12}}>
                        <TextField 
                           autoComplete="new-password"
                           name="password"
@@ -101,7 +102,7 @@ export default function Signup(){
                           fullWidth
                           id="password"
                           label="Password"
-                          value={FormData.password}
+                          value={formData.password}
                           onChange={handleInputChange}
                        />
                     </Grid>
@@ -116,7 +117,7 @@ export default function Signup(){
                     {loading ? <CircularProgress color="success" size={24} /> : 'Sign Up'}
                   </Button>
                   <Grid container justifyContent="flex-end"> 
-                     <Grid item>
+                     <Grid>
                         <Link variant="body2" onClick={handleSignInClick}>
                             Already have an account? Sign in
                         </Link>
