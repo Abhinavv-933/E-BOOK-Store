@@ -15,15 +15,15 @@ const createUser = async(userData) => {
       throw new Error('User already exist !');
      }
      const hashedPassword = await bcrypt.hash(password,10);
-     const User = new User({
+     const newUser = new User({
       email: email,
       firstName:firstName,
       lastName:lastName,
       role:'CUSTOMER',
       password:hashedPassword
      });
-     await User.save();
-     return User;
+     await newUser.save();
+     return newUser;
 
   } catch (error) {
      console.log(`Error creating user account: ${error}`); 
@@ -50,7 +50,8 @@ const loginUser = async(userData) => {
      return token;
 
   } catch (error) {
-     console.log(`Error creating user account: ${error}`); 
+      console.error(`Error logging in user: ${error.message}`);
+    throw error;
   }
 };
 
