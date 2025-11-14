@@ -1,6 +1,7 @@
 const express =  require('express');
 require('dotenv').config();
 const mongoose = require('mongoose');
+const cors = require('cors');
 const {createAdminAccount} = require('./utils/common');
 const authRoute = require('./routes/auth/authRoute');
 
@@ -12,6 +13,14 @@ app.use(express.urlencoded({ extended: true}));
 const port = process.env.PORT;
 const mongoURI = process.env.MONGODB_URI;
 //console.log("Mongo URI from env:", process.env.MONGODB_URI);
+const corsorigin = process.env.CORS_ORIGIN;
+
+const corsOption = {
+   origin : corsorigin,
+   optionSuccessStatus:200
+};
+
+app.use(cors(corsOption));
 
 mongoose.connect(mongoURI, {})
   .then(() => {

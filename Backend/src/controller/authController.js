@@ -9,7 +9,7 @@ const signup = async(req, res) => {
   }
 };
 
-const login = async(req,res) => {
+const signin = async(req,res) => {
    try {
     const token = await loginUser(req.body);
      res.status(200).json({message: "login successful",token});
@@ -18,4 +18,4 @@ const login = async(req,res) => {
    }
 };
 
-module.exports = {signup, login};
+module.exports = {signup, signin};
