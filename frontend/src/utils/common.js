@@ -24,13 +24,13 @@ export const decodeToken = () => {
 };
 
 export const isAdminLoggedin = () => {
-   const decodeToken  = decodeToken();
-   return decodeToken?.role === 'ADMIN';
+   const decodedToken  = decodeToken();
+   return decodedToken?.role === 'ADMIN';
 }
 
 export const isCustomerLoggedin = () => {
-   const decodeToken  = decodeToken();
-   return decodeToken?.role === 'CUSTOMER';
+   const decodedToken  = decodeToken();
+   return decodedToken?.role === 'CUSTOMER';
 };
 
 export const removeToken = () => {
