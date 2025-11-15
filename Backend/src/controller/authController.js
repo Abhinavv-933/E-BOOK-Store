@@ -9,13 +9,18 @@ const signup = async(req, res) => {
   }
 };
 
-const signin = async(req,res) => {
-   try {
-    const token = await loginUser(req.body);
-     res.status(200).json({message: "login successful",token});
-   } catch (error) {
-     res.status(400).json({error:error.message});
-   }
+const signin = async (req,res) => {
+  try {
+    const { token, role } = await loginUser(req.body);
+    res.status(200).json({
+      message: "login successful",
+      token,
+      role
+    });
+  } catch (error) {
+    res.status(400).json({error:error.message});
+  }
 };
+
 
 module.exports = {signup, signin};

@@ -6,6 +6,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Grid from '@mui/material/Grid';
 import { signin } from "../../services/auth/auth";
 import {useSnackbar} from "notistack";
+import { isAdminLoggedin, isCustomerLoggedin,saveToken } from "../../../../utils/common";
 
 const defaultTheme = createTheme();
 
@@ -33,8 +34,15 @@ export default function Signin(){
        const response = await signin(formData);
        if(response.status === 200){
           console.log(response);
+          const token =  response.data.token;
+          saveToken(token);
+          if(isAdminLoggedin()){
+             navigate('/Admin/dashboard');
+          }
+          else if(isCustomerLoggedin()){
+            navigate('/customer/dashboard');
+          }
           
-          // ✅ FIX 1: Show success notification
           enqueueSnackbar('Sign in successful!', { variant: 'success', autoHideDuration: 3000});
           
           // ✅ FIX 2: Clear form fields
@@ -42,16 +50,6 @@ export default function Signin(){
             email: '',
             password: ''
           });
-          
-          //  Store token (if your backend sends one)
-          if(response.data.token) {
-            localStorage.setItem('token', response.data.token);
-          }
-          
-          // ✅ FIX 4: Redirect to dashboard/home after successful login
-          setTimeout(() => {
-            navigate('/dashboard'); // Change '/dashboard' to your desired route
-          }, 1000); // Small delay to show the success message
        }
      } catch (error) {
          enqueueSnackbar('Invalid Credentials!',{ variant: 'error', autoHideDuration: 5000});

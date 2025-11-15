@@ -19,7 +19,7 @@ const createUser = async(userData) => {
       email: email,
       firstName:firstName,
       lastName:lastName,
-      role:'CUSTOMER',
+      role: userData.role || 'CUSTOMER',
       password:hashedPassword
      });
      await newUser.save();
@@ -47,7 +47,10 @@ const loginUser = async(userData) => {
       process.env.JWT_SECRET,
       { expiresIn: '1d'}
      )
-     return token;
+     return {
+      token,
+      role: existingUser.role,
+    };
 
   } catch (error) {
       console.error(`Error logging in user: ${error.message}`);
