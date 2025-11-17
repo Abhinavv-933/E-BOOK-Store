@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const {createAdminAccount} = require('./utils/common');
 const authRoute = require('./routes/auth/authRoute');
+const adminBookRoute = require('./routes/admin/bookRoute');
 
 const app = express();
 
@@ -34,3 +35,6 @@ app.listen(port, () => {
 });
 
 app.use('/api/auth', authRoute); 
+
+//admin Routes
+app.use('/api/admin/book',adminBookRoute);
