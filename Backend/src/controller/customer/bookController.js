@@ -1,0 +1,35 @@
+const { fetchAllBook, fetchBookById , searchBookByGenre} = require('../../services/customer/bookService');
+
+
+const getAllBook = async(req, res)=> {
+   try {
+      const books = await fetchAllBook();
+      res.status(200).json(books);
+   } catch (error) {
+      res.status(500).json({error: error.message});
+   }
+};
+
+const getBookById = async(req, res)=> {
+   try {
+      const book = await fetchBookById(req.params.id);
+      if(!book){
+         return res.status(404).json({message: "Book not found"});
+      }
+      res.status(200).json(book);
+   } catch (error) {
+      res.status(500).json({error: error.message});
+   }
+};
+
+
+const searchBook = async(req, res)=> {
+   try {
+      const books = await searchBookByGenre(req.params.genre);
+      res.status(200).json(books);
+   } catch (error) {
+      res.status(500).json({error: error.message});
+   }
+};
+
+module.exports = { getAllBook, getBookById ,searchBook}

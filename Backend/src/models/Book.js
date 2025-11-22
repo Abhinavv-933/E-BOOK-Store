@@ -3,45 +3,49 @@ const { Schema } = mongoose;
 
 const BookSchema = new Schema({
    title: {
-      type: String ,
-      required : [true, "Title is required"]
+      type: String,
+      required: [true, "Title is required"]
    },
    author: {
-      type: String ,
-      required : [true, "Author is required"]
+      type: String,
+      required: [true, "Author is required"]
    },
    Description: {
-      type: String ,
-      required : [true, "Description is required"]
+      type: String,
+      required: [true, "Description is required"]
    },
    price: {
-      type: Number ,
-      required : [true, "Price is required"],
-      min: 0 ,
+      type: Number,
+      required: [true, "Price is required"],
+      min: 0
    },
    genre: {
-      type: String ,
-      required : [true, "Genre is required"]
+      type: String,
+      required: [true, "Genre is required"]
    },
    condition: {
-      type: String ,
-      enum : ["New", "Like New", " Used - Good", "Used - Acceptable"],
-      required : [true, "Condition is required"]
+      type: String,
+      enum: [
+         "New",
+         "Used - Good",
+         "Used - Like New",
+         "Used - Fair",
+         "Used - Acceptable"
+      ],
+      required: [true, "Condition is required"]
    },
    edition: {
-      type: String ,
+      type: String
    },
    imageUrl: {
-      type: String ,
-      required : true,
+      type: String,
+      required: true
    },
    status: {
-      type: String ,
-      enum : ["Available", "Solid"],
-      default : "Available",
+      type: String,
+      enum: ["Available", "Sold"],
+      default: "Available"
    },
-}, {timestamps: true});
+}, { timestamps: true });
 
-const Book = mongoose.model('Book', BookSchema);
-
-module.exports = Book;
+module.exports = mongoose.model("Book", BookSchema);

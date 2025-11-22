@@ -1,6 +1,14 @@
 const Book = require('../../models/Book');
 
-const postBook = async(bookData) => {
+const postBook = async (bookData) => {
+
+   // If user sends an array → bulk insert
+   if (Array.isArray(bookData)) {
+      const books = await Book.insertMany(bookData);
+      return books;
+   }
+
+   // Otherwise → single insert
    const newBook = new Book(bookData);
    await newBook.save();
    return newBook;

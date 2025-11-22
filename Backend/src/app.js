@@ -5,6 +5,7 @@ const cors = require('cors');
 const {createAdminAccount} = require('./utils/common');
 const authRoute = require('./routes/auth/authRoute');
 const adminBookRoute = require('./routes/admin/bookRoute');
+const customerBookRoute =  require('./routes/customer/bookRoute');
 
 const app = express();
 
@@ -18,7 +19,9 @@ const corsorigin = process.env.CORS_ORIGIN;
 
 const corsOption = {
    origin : corsorigin,
-   optionSuccessStatus:200
+   optionSuccessStatus:200,
+   methods: ["GET", "POST", "PUT", "DELETE"],
+   credentials: true
 };
 
 app.use(cors(corsOption));
@@ -38,3 +41,6 @@ app.use('/api/auth', authRoute);
 
 //admin Routes
 app.use('/api/admin/book',adminBookRoute);
+
+//customer Routes
+app.use('/api/customer/book',customerBookRoute);
