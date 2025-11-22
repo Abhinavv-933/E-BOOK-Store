@@ -11,8 +11,8 @@ const createBook = async(req, res)=> {
 
 const getAllBook = async(req, res)=> {
    try {
-      const newBook = await fetchAllBook();
-      res.status(201).json(books);
+      const books = await fetchAllBook();
+      res.status(200).json(books);
    } catch (error) {
       res.status(500).json({error: error.message});
    }
@@ -20,11 +20,11 @@ const getAllBook = async(req, res)=> {
 
 const getBookById = async(req, res)=> {
    try {
-      const Book = await fetchBookById(req.params.id);
-      if(!Book){
-          res.status(404).json({message: "Book not found"});
+      const book = await fetchBookById(req.params.id);
+      if(!book){
+         return res.status(404).json({message: "Book not found"});
       }
-      res.status(201).json(books);
+      res.status(200).json(book);
    } catch (error) {
       res.status(500).json({error: error.message});
    }
@@ -32,9 +32,9 @@ const getBookById = async(req, res)=> {
 
 const deleteBook = async(req, res)=> {
    try {
-      const deleteBook = await removeBook(req.params.id);
-      if(!deleteBook){
-          res.status(404).json({message: "Book not found"});
+      const deleted = await removeBook(req.params.id);
+      if(!deleted){
+         return res.status(404).json({message: "Book not found"});
       }
       res.status(200).json({message: "Book deleted successfully"});
    } catch (error) {
@@ -44,11 +44,11 @@ const deleteBook = async(req, res)=> {
 
 const updateBook = async(req, res)=> {
    try {
-      const Book = await modifyBook(req.params.id, req.body);
-      if(!Book){
-          res.status(404).json({message: "Book not found"});
+      const book = await modifyBook(req.params.id, req.body);
+      if(!book){
+         return res.status(404).json({message: "Book not found"});
       }
-      res.status(200).json({message: "Book Updated successfully", Book});
+      res.status(200).json({message: "Book updated successfully", book});
    } catch (error) {
       res.status(500).json({error: error.message});
    }
@@ -56,11 +56,11 @@ const updateBook = async(req, res)=> {
 
 const searchBook = async(req, res)=> {
    try {
-      const Book = await searchBookByGenre(req.params.genre);
-      res.status(200).json(Book);
+      const books = await searchBookByGenre(req.params.genre);
+      res.status(200).json(books);
    } catch (error) {
       res.status(500).json({error: error.message});
    }
 };
 
-module.exports = { createBook, getAllBook, getBookById , deleteBook, updateBook, searchBook}
+module.exports = { createBook, getAllBook, getBookById , deleteBook, updateBook, searchBook };
