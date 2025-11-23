@@ -6,6 +6,9 @@ import Signup from './pages/auth/components/signup/Signup';
 import Signin from './pages/auth/components/signin/Signin';
 import AdminDashboard from './pages/Admin/components/dashboard/adminDashboard';
 import CustomerDashboard from './pages/customer/components/dashboard/customerDashboard';
+import PostBook from './pages/Admin/components/post-book/PostBook';
+import UpdateBook from './pages/Admin/components/update-book/UpdateBook';
+import ViewOrders from './pages/Admin/components/view-orders/ViewOrders';
 
 function App() {
   return (
@@ -20,6 +23,10 @@ function App() {
 
         {/* Admin Components */}
         <Route path='/admin/dashboard' element={<AdminDashboard />} />
+        <Route path='/admin/book/post' element={<PostBook />} />
+        <Route path='/admin/book/:id/edit' element={<UpdateBook />} />
+        <Route path='/admin/book/orders' element={<ViewOrders />} />
+
         
         {/* Customer components */}
          <Route path='/customer/dashboard' element={<CustomerDashboard />} />
