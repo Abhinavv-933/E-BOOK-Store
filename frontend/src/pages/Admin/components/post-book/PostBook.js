@@ -1,4 +1,21 @@
-import { useState } from "react"
+import { useState } from "react";
+import {
+   Avatar,
+   Button,
+   CssBaseline,
+   TextField,
+   Box,
+   Typography,
+   Container,
+   Backdrop,
+   InputLabel,
+   MenuItem,
+   FormControl,
+   Select,
+} from '@mui/material';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {CircularProgress } from "@mui/material";
+import BookIcon from '@mui/icons-material/Book';
 
 const defaultTheme = createTheme();
 
@@ -28,9 +45,10 @@ export default function PostBook(){
 ]);
   const [book,setBook] = useState({
     title: '',
-    auhtor: '',
-    Description: '',
+    author: '',
+    description: '',
     price: '',
+    genre: '',
     condition: '',
     edition: '',
     imageUrl: ''
@@ -132,12 +150,81 @@ export default function PostBook(){
                value={book.price}
                onChange={handleInputChange}
             />
-
-
+            <FormControl fullWidth margin="normal">
+               <InputLabel id="genre-label">Select genre</InputLabel>
+               <Select
+                   labelId = "genre-label"
+                   id="genre"
+                   value={book.genre}
+                   onChange={handleInputChange}
+                   name= "genre"
+                   label="Select genre"
+               >
+                  <MenuItem value="">Select genre</MenuItem>
+                  {genre.map((g) => {
+                     <MenuItem key={g} value={g}>
+                        {g}
+                     </MenuItem>
+                  })}
+               </Select>
+            </FormControl>
+            <FormControl fullWidth margin="normal">
+               <InputLabel id="condition-label">Select condition</InputLabel>
+               <Select
+                   labelId = "condition-label"
+                   id="condition"
+                   value={book.condition}
+                   onChange={handleInputChange}
+                   name= "condition"
+                   label="Select condition"
+               >
+                  <MenuItem value="">Select condition</MenuItem>
+                  {conditions.map((c) => {
+                     <MenuItem key={c} value={c}>
+                        {c}
+                     </MenuItem>
+                  })}
+               </Select>
+            </FormControl>
+             <TextField
+                 margin="normal"
+                 required
+                 fullWidth
+                 id="edition"
+                 label="Enter edition"
+                 name="edition"
+                 autoComplete="edition"
+                 value={book.edition}
+                 onChange={handleInputChange}
+            />
+            <Button 
+               type="submit"
+               fullWidth
+               variant = "contained"
+               sx={{mt:3, mb:2}}
+               disabled ={
+                  !book.title ||
+                  !book.author ||
+                  !book.description ||
+                  !book.price ||
+                  !book.genre ||
+                  !book.condition ||
+                  !book.edition ||
+                  !book.imageUrl 
+               }
+            >
+               {loading ? <CircularProgress color="success" size={24} /> : 'Post Book'}
+            </Button>
              </Box>
           </Box>  
         </Container>
       </ThemeProvider>
+      <Backdrop 
+         sx ={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer +1}}
+         open ={loading}
+      >
+         <CircularProgress color="success" />
+      </Backdrop>
       </>
    )
 };
