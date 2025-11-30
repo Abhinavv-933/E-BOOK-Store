@@ -10,7 +10,7 @@ const BookSchema = new Schema({
       type: String,
       required: [true, "Author is required"]
    },
-   Description: {
+   description: {   // FIXED lowercase field
       type: String,
       required: [true, "Description is required"]
    },
@@ -27,9 +27,8 @@ const BookSchema = new Schema({
       type: String,
       enum: [
          "New",
+         "Like New",         // FIXED to match frontend
          "Used - Good",
-         "Used - Like New",
-         "Used - Fair",
          "Used - Acceptable"
       ],
       required: [true, "Condition is required"]
