@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
-import { deleteBook, getBooks } from "../../service/admin";
-import { Grid, Typography,Box , Button, Paper, CircularProgress, Backdrop} from "@mui/material";
+import { deleteBook, getBooks, searchBook } from "../../service/admin";
+import { Grid, Typography,Box , Button, Paper, CircularProgress, Backdrop, FormControl, InputLabel, Select, MenuItem} from "@mui/material";
 import { Edit as  EditIcon, Delete as DeleteIcon} from '@mui/icons-material';
 import { styled } from "@mui/material/styles";
 
@@ -28,6 +28,29 @@ const Item =styled(Paper)(({ theme }) => ({
 export default function AdminDashboard() {
     const [books,setBooks] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [selectedGenre, setSelectedGenre] = useState('');
+     const [genres] = useState([
+    "Fantasy",
+    "Science Fiction",
+    "Thriller",
+    "Mystery",
+    "Romance",
+    "Drama",
+    "Historical Fiction",
+    "Horror",
+    "Adventure",
+    "Non-Fiction",
+    "Biography",
+    "Self-Help",
+    "Philosophy",
+    "Young Adult",
+    "Dystopian",
+    "Crime",
+    "Poetry",
+    "Classics",
+    "Graphic Novel",
+    "Children's Literature"
+  ]);
     const navigate = useNavigate();
     const {enqueueSnackbar } = useSnackbar();
 
@@ -49,6 +72,22 @@ export default function AdminDashboard() {
         fetchBooks();
       },[]);
 
+     const handleGenreChange = async (e) => {
+        setLoading(true);
+        const selectedGenre = e.target.value;
+        setSelectedGenre(selectedGenre);
+        try {
+          const response  = await searchBook(selectedGenre);
+          if(response.status === 200){
+            setBooks(response.data);
+          }
+        } catch (error) {
+          console.error(error.message);
+        } finally{
+          setLoading(false);
+        }
+      };
+
 
       const handleDeleteBook = async (id) => {
         setLoading(true);
@@ -58,6 +97,7 @@ export default function AdminDashboard() {
           if(response.status === 200){
             navigate(`/admin/dashboard`)
             enqueueSnackbar('Book deleted successfully', {variant: 'success', autoHideDuration:5000});
+            fetchBooks();
           }
         } catch (error) {
           enqueueSnackbar('Getting error while deleting book', {variant: 'error', autoHideDuration:5000});
@@ -73,6 +113,33 @@ export default function AdminDashboard() {
 
     return (
       <>
+         <Grid 
+             sx={{
+                marginTop:3,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+             }}
+          >
+              <FormControl sx={{ mt:2, width:400}} margin="normal">
+                   <InputLabel id="genre-label">Select genre to search</InputLabel>
+                   <Select
+                       labelId="genre-label"
+                       id="genre"
+                       value={selectedGenre}
+                       onChange={handleGenreChange}
+                       label="Select genre"
+                    >
+                       <MenuItem value="">Select genre</MenuItem>
+                       {genres.map((genre) => (
+                           <MenuItem key={genre} value={genre}>
+                              {genre}
+                           </MenuItem>
+                        ))}
+                    </Select>
+              </FormControl>
+          </Grid>
         <Box sx={{ flexGrow:1, p:5}}>
           <Grid container spacing= {2}>
              {books.map((book) => (

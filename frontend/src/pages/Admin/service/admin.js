@@ -18,10 +18,36 @@ export const deleteBook = async(id) => {
   }
 }
 
-
 export const getBooks = async() => {
   try {
     const response = await instance.get('/api/admin/book');
+    return response;
+  } catch (error) {
+      throw error;
+  }
+}
+
+export const getBooksById = async(id) => {
+  try {
+    const response = await instance.get(`/api/admin/book/${id}`);
+    return response;
+  } catch (error) {
+      throw error;
+  }
+}
+
+export const updateBook = async(id, bookDto) => {
+  try {
+    const response = await instance.put(`/api/admin/book/${id}`, bookDto);
+    return response;
+  } catch (error) {
+      throw error;
+  }
+};
+
+export const searchBook = async(genre) => {
+  try {
+    const response = await instance.get(`/api/admin/book/search/${genre}`);
     return response;
   } catch (error) {
       throw error;

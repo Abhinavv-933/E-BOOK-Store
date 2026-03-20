@@ -26,7 +26,7 @@ const defaultTheme = createTheme();
 
 export default function PostBook() {
 
-  const [conditions] = useState(["New", "Like New", "Used - Good", "Used - Acceptable"]);
+  const [conditions] = useState(["New", "Like New", "Used - Good", "Used - Acceptable","Used - Like New"]);
   const [genres] = useState([
     "Fantasy",
     "Science Fiction",
