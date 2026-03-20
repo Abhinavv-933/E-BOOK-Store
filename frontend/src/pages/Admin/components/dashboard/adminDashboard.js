@@ -72,7 +72,7 @@ export default function AdminDashboard() {
         fetchBooks();
       },[]);
 
-     const handleGenreChange = async (e) => {
+    const handleGenreChange = async (e) => {
         setLoading(true);
         const selectedGenre = e.target.value;
         setSelectedGenre(selectedGenre);
@@ -89,7 +89,7 @@ export default function AdminDashboard() {
       };
 
 
-      const handleDeleteBook = async (id) => {
+    const handleDeleteBook = async (id) => {
         setLoading(true);
     
         try {
@@ -113,7 +113,7 @@ export default function AdminDashboard() {
 
     return (
       <>
-         <Grid 
+        <Grid 
              sx={{
                 marginTop:3,
                 display: 'flex',
@@ -139,7 +139,7 @@ export default function AdminDashboard() {
                         ))}
                     </Select>
               </FormControl>
-          </Grid>
+        </Grid>
         <Box sx={{ flexGrow:1, p:5}}>
           <Grid container spacing= {2}>
              {books.map((book) => (
@@ -228,7 +228,6 @@ export default function AdminDashboard() {
              ))}
           </Grid>
         </Box>
-
         <Backdrop 
          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
          open={loading}
