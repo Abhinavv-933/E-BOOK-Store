@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
-import { getBooks, searchBook } from "../../service/customer";
-import { Grid, Typography,Box , Paper, CircularProgress, Backdrop, FormControl, InputLabel, Select, MenuItem} from "@mui/material";
-
+import { addBookToCart, getBooks, searchBook } from "../../service/customer";
+import { Grid, Typography,Box , Paper, CircularProgress, Backdrop,Button, FormControl, InputLabel, Select, MenuItem} from "@mui/material";
 import { styled } from "@mui/material/styles";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const Img = styled('img')({
     margin: 'auto',
@@ -69,9 +69,9 @@ export default function CustomerDashboard() {
         }
       };
 
-      useEffect(() => {
-        fetchBooks();
-      },[]);
+    useEffect(() => {
+      fetchBooks();
+    },[]);
 
      const handleGenreChange = async (e) => {
         setLoading(true);
@@ -88,6 +88,25 @@ export default function CustomerDashboard() {
           setLoading(false);
         }
       };
+
+    const handleAddBookToCart = async (bookId) => {
+      setLoading(true);
+      try {
+       const response  = await addBookToCart(bookId);
+       if(response.status === 201){
+         enqueueSnackbar('Book added to Cart successfully', {variant: 'success', autoHideDuration:5000});
+      }
+
+    } catch (error) {
+      if(error.response && error.response.status === 409)
+      enqueueSnackbar('Book Already exist in Cart', {variant: 'error', autoHideDuration:5000});
+      else{
+        enqueueSnackbar('Getting Error while Adding Book to Cart', {variant: 'error', autoHideDuration:5000});
+      }
+    } finally{
+      setLoading(false);
+    }
+  };
 
     return (
        <>
@@ -181,24 +200,17 @@ export default function CustomerDashboard() {
                                   <strong>{book.status}</strong>
                               </Typography>
                           </Box>
-                          {/* <Box sx={{disply: 'flex',gap:2 , mt:2}}>
-                               <Button
-                                   varient="outlined"
-                                   color="primary"
-                                   endIcon={<EditIcon />}
-                                   onClick={() => handleUpdateBook(book._id)}
-                                >
-                                  Update
-                                </Button>
-                                <Button
-                                   varient="outlined"
-                                   color="primary"
-                                   endIcon={<DeleteIcon />}
-                                   onClick={() => handleDeleteBook(book._id)}
-                                >
-                                  Delete
-                                </Button>
-                          </Box> */}
+                          {book.status === "Available" && (
+                            <Button 
+                                varient="outlined"
+                                color="primary"
+                                sx={{ mt:2 }}
+                                endIcon={<AddShoppingCartIcon />}
+                                onClick={() => handleAddBookToCart(book._id)}
+                            >
+                               Add to Cart
+                            </Button>    
+                          )}
                         </Box>
                       </Box>
                    </Item>

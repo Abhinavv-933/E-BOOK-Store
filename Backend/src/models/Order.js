@@ -1,0 +1,36 @@
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
+
+const orderSchema = new Schema({
+  orderDescription: {
+    type: String
+  },
+  amount: {
+    type: Number,
+    required: true
+  },
+  address: {
+    type: String,
+    required: false   // ✅ optional until checkout
+  },
+  orderStatus: {
+    type: String,
+    enum: ['PENDING', 'PLACED'],
+    required: true
+  },
+  trackingId: {
+    type: String,
+    default: () => require('uuid').v4()
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  cartItem: [{ // ✅ lowercase + array
+    type: Schema.Types.ObjectId,
+    ref: 'CartItem',
+  }],
+}, { timestamps: true });
+
+module.exports = mongoose.models.Order || mongoose.model('Order', orderSchema); // ✅

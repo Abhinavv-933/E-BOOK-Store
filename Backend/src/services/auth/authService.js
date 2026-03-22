@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const User = require('../../models/user');
 const jwt = require('jsonwebtoken');
+const Order = require('../../models/Order');
 require('dotenv').config();
  
 const createUser = async(userData) => {
@@ -22,6 +23,13 @@ const createUser = async(userData) => {
       role: userData.role || 'CUSTOMER',
       password:hashedPassword
      });
+      const order = new Order({
+      amount: 0,
+      address: "Default address",
+      orderStatus: 'PENDING',
+      user: newUser
+     });
+     await order.save();
      await newUser.save();
      return newUser;
 
