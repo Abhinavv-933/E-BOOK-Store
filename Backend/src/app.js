@@ -21,7 +21,10 @@ const mongoURI = process.env.MONGODB_URI;
 const corsorigin = process.env.CORS_ORIGIN;
 
 const corsOption = {
-   origin : corsorigin,
+   origin : [
+    'https://e-book-store-abd.vercel.app',
+    'http://localhost:3000' // keep for local dev
+  ],
    optionSuccessStatus:200,
    methods: ["GET", "POST", "PUT", "DELETE"],
    credentials: true
