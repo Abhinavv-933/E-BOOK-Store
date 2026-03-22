@@ -65,7 +65,10 @@ export default function UpdateBook(){
      const navigate = useNavigate();
      const {enqueueSnackbar } = useSnackbar();
 
-  const fetchBook = async () => {
+     
+    useEffect(() => {
+       const fetchBook = async () => {
+        const fetchBook = async () => {
              setLoading(true);
              try {
                const response  = await getBooksById(id);
@@ -78,10 +81,9 @@ export default function UpdateBook(){
                setLoading(false);
              }
            };
-     
-           useEffect(() => {
-             fetchBook();
-           },[fetchBook]);
+    };
+    fetchBook();
+}, []);
 
    const handleInputChange = (event) => {
        const { name, value } = event.target;
