@@ -65,25 +65,22 @@ export default function UpdateBook(){
      const navigate = useNavigate();
      const {enqueueSnackbar } = useSnackbar();
 
-     
-    useEffect(() => {
+     useEffect(() => {
        const fetchBook = async () => {
-        const fetchBook = async () => {
-             setLoading(true);
-             try {
-               const response  = await getBooksById(id);
-               if(response.status === 200){
-                 setBook(response.data);
-               }
-             } catch (error) {
-               console.error(error.message);
-             } finally{
-               setLoading(false);
-             }
-           };
-    };
-    fetchBook();
-}, []);
+         setLoading(true);
+         try {
+           const response = await getBooksById(id);
+           if(response.status === 200){
+             setBook(response.data);
+           }
+         } catch (error) {
+           console.error(error.message);
+         } finally {
+           setLoading(false);
+         }
+       };
+       fetchBook();
+     }, [id]);
 
    const handleInputChange = (event) => {
        const { name, value } = event.target;
@@ -100,10 +97,10 @@ export default function UpdateBook(){
        setLoading(true);
    
        try {
-         const response  = await updateBook(id, book);
+         const response = await updateBook(id, book);
          if(response.status === 200){
            enqueueSnackbar('Book updated successfully', {variant: 'success', autoHideDuration:5000});
-            navigate(`/admin/dashboard`);
+           navigate(`/admin/dashboard`);
          }
        } catch (error) {
          enqueueSnackbar('Getting error while updating book', {variant: 'error', autoHideDuration:5000});
@@ -203,7 +200,6 @@ export default function UpdateBook(){
                 onChange={handleInputChange}
               />
 
-              {/* GENRE DROPDOWN */}
               <FormControl fullWidth margin="normal">
                 <InputLabel id="genre-label">Select genre</InputLabel>
                 <Select
@@ -223,7 +219,6 @@ export default function UpdateBook(){
                 </Select>
               </FormControl>
 
-              {/* CONDITION DROPDOWN */}
               <FormControl fullWidth margin="normal">
                 <InputLabel id="condition-label">Select condition</InputLabel>
                 <Select
@@ -297,7 +292,6 @@ export default function UpdateBook(){
         </Container>
       </ThemeProvider>
 
-      {/* LOADING BACKDROP */}
       <Backdrop 
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={loading}
