@@ -1,7 +1,7 @@
 const Book = require('../../models/Book');
 const Order = require('../../models/Order');
-const User = require('../../models/user');       // ✅ added
-const CartItem = require('../../models/CartItem'); // ✅ added
+const User = require('../../models/user');       
+const CartItem = require('../../models/Cartitem'); // ✅ added
 
 const addBookToCart = async (userId, bookId) => {
   let activeOrder = await Order.findOne({ user: userId, orderStatus: 'PENDING' }).populate('cartItem');
