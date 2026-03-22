@@ -1,28 +1,8 @@
 import { useEffect, useState } from "react";
 import { getCartByUser, placeOrder } from "../../service/customer";
-import { Box, Grid, Typography, Paper, Backdrop, CircularProgress, Dialog, DialogContentText, DialogTitle, DialogContent, TextField, DialogActions, Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Box, Grid, Typography, Backdrop, CircularProgress, Dialog, DialogContentText, DialogTitle, DialogContent, TextField, DialogActions, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
-
-const Img = styled('img')({
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    height: '250px',
-    objectFit: 'cover'
-});
-
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    ...theme.applyStyles('dark', {
-        backgroundColor: '#1A2027',
-    }),
-}))
 
 
 export default function Cart() {
@@ -69,7 +49,7 @@ export default function Cart() {
         setLoading(true);
 
         try {
-            const response = await placeOrder(formData);  // ✅ removed console.log(book) — book is not defined
+            const response = await placeOrder(formData);
             if (response.status === 200) {
                 navigate(`/customer/dashboard`);
                 enqueueSnackbar('Order placed successfully', { variant: 'success', autoHideDuration: 5000 });
@@ -86,11 +66,11 @@ export default function Cart() {
         <>
             {cartItem.length > 0 ? (
                 <>
-                    <Box sx={{ flexGrow: 1, p: 5 }}>  {/* ✅ flexGrow not flexgrow */}
+                    <Box sx={{ flexGrow: 1, p: 5 }}>
                         <Grid container spacing={1}>
                             <Grid container item spacing={3}>
                                 {cartItem.map(item => (
-                                    <Grid item key={item.book._id}>  {/* ✅ Grid item, not <item> tag */}
+                                    <Grid item key={item.book._id}>
                                         <img src={item.book.imageUrl} alt="product-image" style={{ width: 70, height: 70 }} />
                                         <Typography variant="h6">
                                             Name: {item.book.title}
@@ -103,13 +83,13 @@ export default function Cart() {
                             </Grid>
                         </Grid>
                     </Box>
-                    <Box sx={{ flexGrow: 1, p: 5, display: 'flex', justifyContent: 'flex-end' }}>  {/* ✅ flexGrow */}
+                    <Box sx={{ flexGrow: 1, p: 5, display: 'flex', justifyContent: 'flex-end' }}>
                         <Grid container spacing={1} direction="column" alignItems="flex-end">
                             <Grid item>
                                 <Typography>Total Amount: ${order.amount}</Typography>
                             </Grid>
                             <Grid item>
-                                <Button variant="contained" color="primary" onClick={() => setOpen(true)} sx={{ mt: 2 }}>  {/* ✅ variant & onClick */}
+                                <Button variant="contained" color="primary" onClick={() => setOpen(true)} sx={{ mt: 2 }}>
                                     Place Order
                                 </Button>
                             </Grid>
@@ -119,14 +99,14 @@ export default function Cart() {
             ) : (
                 <Box
                     sx={{
-                        flexGrow: 1,  /* ✅ flexGrow */
+                        flexGrow: 1,
                         p: 5,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                     }}
                 >
-                    <Typography variant="h4">Nothing to see here</Typography>  {/* ✅ variant */}
+                    <Typography variant="h4">Nothing to see here</Typography>
                 </Box>
             )}
 
@@ -138,8 +118,8 @@ export default function Cart() {
                     onSubmit: handleSubmit
                 }}
             >
-                <DialogTitle>Place Order</DialogTitle>  {/* ✅ now imported */}
-                <DialogContent>  {/* ✅ now imported */}
+                <DialogTitle>Place Order</DialogTitle>
+                <DialogContent>
                     <DialogContentText>
                         Place your order by adding any special instruction in description and address.
                     </DialogContentText>
@@ -154,7 +134,7 @@ export default function Cart() {
                         multiline
                         maxRows={4}
                         fullWidth
-                        variant="standard"  /* ✅ variant */
+                        variant="standard"
                         value={formData.address}
                         onChange={handleInputChange}
                     />
@@ -168,13 +148,13 @@ export default function Cart() {
                         multiline
                         maxRows={4}
                         fullWidth
-                        variant="standard"  /* ✅ variant */
+                        variant="standard"
                         value={formData.orderDescription}
                         onChange={handleInputChange}
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setOpen(false)}>Cancel</Button>  {/* ✅ onClick */}
+                    <Button onClick={() => setOpen(false)}>Cancel</Button>
                     <Button type="submit">Place Order</Button>
                 </DialogActions>
             </Dialog>

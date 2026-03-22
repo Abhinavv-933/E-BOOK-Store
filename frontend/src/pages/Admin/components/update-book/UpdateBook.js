@@ -81,7 +81,7 @@ export default function UpdateBook(){
      
            useEffect(() => {
              fetchBook();
-           },[]);
+           },[fetchBook]);
 
    const handleInputChange = (event) => {
        const { name, value } = event.target;

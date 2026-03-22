@@ -52,7 +52,7 @@ export default function CustomerDashboard() {
     "Graphic Novel",
     "Children's Literature"
   ]);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const {enqueueSnackbar } = useSnackbar();
 
     const fetchBooks = async () => {
