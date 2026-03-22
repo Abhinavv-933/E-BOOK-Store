@@ -2,7 +2,7 @@ import axios from "axios";
 import {getToken} from "../utils/common";
 
 const instance = axios.create({
-   baseURL: 'http://localhost:5000', // Change this to your backend port
+   baseURL: process.env.VITE_API_URL || 'http://localhost:5000', // Change this to your backend port
    headers: {
      'Content-Type': 'application/json',
    },
