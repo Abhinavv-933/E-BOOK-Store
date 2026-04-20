@@ -32,17 +32,6 @@ const corsOption = {
 
 app.use(cors(corsOption));
 
-mongoose.connect(mongoURI, {})
-  .then(() => {
-    console.log('CONNECTED TO MONGODB..!');
-    createAdminAccount();
-  })
-  .catch(error => console.error(`mongoDB connection error: ${error}`));
-
-app.listen(port, () => {
-  console.log(`🚀 Server running on port ${port}`);
-});
-
 app.use('/api/auth', authRoute); 
 
 //admin Routes
@@ -53,3 +42,14 @@ app.use('/api/admin/order', adminOrderRoute);
 app.use('/api/customer/book',customerBookRoute);
 app.use('/api/customer/cart', customerCartRoute);
 app.use('/api/customer/order', customerOrderRoute);
+
+mongoose.connect(mongoURI, {})
+  .then(() => {
+    console.log('CONNECTED TO MONGODB..!');
+    createAdminAccount();
+  })
+  .catch(error => console.error(`mongoDB connection error: ${error}`));
+
+app.listen(port, () => {
+  console.log(`🚀 Server running on port ${port}`);
+});

@@ -18,7 +18,7 @@ export const signup = async(signupDto) => {
 export const signin = async(signinDto) => {
     try {
       console.log('Sending signin request with data:', signinDto); // Debug log
-      const response = await instance.post('/api/auth/signin', signinDto);
+      const response = await instance.post('/api/auth/login', signinDto);
       console.log('Signin response:', response); // Debug log
       return response;
     } catch (error) {
